@@ -36,8 +36,22 @@ const removeStudent = (req , res) =>{
     }
 };
 
-const updateStudents = (req , res) =>{
-    res.status(200).send('ok')
+const updateStudents = (req, res) => {
+    if(data.students[req.params.id] != undefined){
+        if(req.body.fname != undefined && req.body.lname != undefined && req.body.gpa != undefined){
+            var student = {
+                fname: req.body.fname,
+                lname: req.body.lname,
+                gpa: req.body.gpa
+            };
+            data.students[req.params.id] = student;
+            return res.status(200).send("Succesfully updated");
+        } else {
+            return res.status(400).send("Bad request");
+        }
+    } else {
+        return res.status(404).send("Not Found");
+    }
 };
 
 const patchStudents = (req , res) =>{
