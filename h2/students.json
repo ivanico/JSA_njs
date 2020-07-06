@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "fname": "Pero",
+        "lname": "Perovski",
+        "gpa": 9.9
+    },
+    {
+        "id": 2,
+        "fname": "Stojce",
+        "lname": "Petkovski",
+        "gpa": 8.3
+    },
+    {
+        "id": 3,
+        "fname": "Petko",
+        "lname": "Sotjcevski",
+        "gpa": 7.1
+        }
+    ]
