@@ -28,8 +28,8 @@ const removeStudent = (req , res) =>{
         studnet.id === req.params.id
     })
     if (found) {
-        students.splice(found, 1)
-        res.status(200).json("Succesfully deleted")
+        students.splice(found, 0)
+        res.status(204).json("Succesfully deleted")
     }
     else{
         res.status(400).json('Bad request, no data found!')
@@ -50,7 +50,7 @@ const updateStudents = (req, res) => {
             return res.status(400).send("Bad request");
         }
     } else {
-        return res.status(404).send("Not Found");
+        return res.status(404).send("Not found");
     }
 };
 
