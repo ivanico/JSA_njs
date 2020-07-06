@@ -1,10 +1,10 @@
 // JSON handlers
 
-const fc = require('fs');
+const fs = require('fs');
 
 const appendFile = (filename , data) => {
     return new Promise((success , fail) =>{
-        fc.appendFile(filename , data , (err) =>{
+        fs.appendFile(filename , data , (err) =>{
             if(err) {
                 return fail(err);
             }
