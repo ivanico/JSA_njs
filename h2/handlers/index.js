@@ -39,7 +39,13 @@ const unlinkFile = (filename) => {
 
   
 const getAllStudents = (req, res) => {
-    return res.status(200).send(students);
+    readFile("./students.json")
+    .then((data) => {
+        return res.status(200).send(data);
+    })
+    .catch((err) => {
+        return res.status(400).send(err);
+    });
 };
 
 const getSingleStudent = (req, res) => {
