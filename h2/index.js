@@ -5,11 +5,11 @@ const handlers = require('./handlers');
 const api = express();
 
 api.get('/students', handlers.getAllStudents);
-api.get('/students/:id', handlers.getSignleStudent);
+api.get('/students/:id', handlers.getSingleStudent);
 api.post('/students', handlers.createStudent);
 api.delete('/students/:id', handlers.removeStudent);
-api.put('/students/:id', handlers.updateStudents);
-api.patch('/students', handlers.patchStudents);
+api.put('/students/:id', handlers.updateStudent);
+api.patch('/students', handlers.patchStudent);
 
 api.listen(8090, err =>{
     if(err){
