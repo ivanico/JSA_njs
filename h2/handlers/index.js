@@ -39,38 +39,60 @@ const unlinkFile = (filename) => {
 
   
 const getAllStudents = (req, res) => {
-    readFile("./students.json")
+    readFile('students.json')
     .then((data) => {
-        return res.status(200).send(data);
+        return res.status(200).send(JSON.parse(data));
     })
     .catch((err) => {
-        return res.status(400).send(err);
+        return res.status(500).send(err);
     });
 };
 
 const getSingleStudent = (req, res) => {
-    if(students[req.params.id] !== undefined){
-        return res.status(200).send(students[req.params.id]);
-    }
-    return res.status(404).send('Not Found');
+    readFile('students.json')
+    .then((data) => {
+    if(data[req.params.id] !== undefined){
+        return res.status(200).send(JSON.parse(data)[req.params.id]);
+    }  
+    })
+    .catch((err) => {
+       return res.status(500).send('Not Found'); 
+    });
+    
 };
 
 const createStudent = (req, res) => {
+    readFile('students.json')
+    .then((data) => {
     if(req.body){
-        students.push({
-            ...req.body,
-            id: students[students.length - 1].id + 1
-        });
-        return res.status(201).send('Created');
+        var data = JSON.parse(data);
+        return appendFile('students.json' ,JSON.stringify({    ...req.body,    
+            id: data[data.length - 1].id + 1
+        }));
+    }})
+    .then(() =>{
+         return res.status(201).send('Created');
+    })    
+    .catch((err) => {
+        return res.status(400).send(err);
+    })   
     }
-    return res.status(400).send('Bad request');
-};
+
 
 const removeStudent = (req, res) => {
-    students = students.filter((e, i) => {
-        return e.id != parseInt(req.params.id);
-    });
-    res.status(204).send();
+    readFile('students.json')
+    .then((data) =>{
+        var data = JSON.parse(data);
+            data = data.filter((e, i) => {
+            return unlinkFile( e.id != parseInt(req.params.id));
+    });    
+    })
+    .then(() =>{
+        return res.status(204).send()
+    })
+    .catch((err) =>{
+        return res.status(500).send(err)
+    })
 };
 
 const updateStudent = (req, res) => {
