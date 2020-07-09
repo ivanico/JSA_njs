@@ -2,6 +2,19 @@
 
 const fs = require('fs');
 
+
+const writeFile = (filename, data) => {
+    return new Promise((success, fail) =>{
+        fs.writeFile(filename, data, (err) =>{
+            if(err) {
+                return fail(err)
+            }
+            return success
+        });
+    });
+};
+
+
 const appendFile = (filename , data) => {
     return new Promise((success , fail) =>{
         fs.appendFile(filename , data , (err) =>{
@@ -66,7 +79,7 @@ const createStudent = (req, res) => {
     .then((data) => {
     if(req.body){
         var data = JSON.parse(data);
-        return appendFile('students.json' ,JSON.stringify({    ...req.body,    
+        return writeFile('students.json' ,JSON.stringify({    ...req.body,    
             id: data[data.length - 1].id + 1
         }));
     }})
@@ -82,13 +95,13 @@ const createStudent = (req, res) => {
 const removeStudent = (req, res) => {
     readFile('students.json')
     .then((data) =>{
-        var data = JSON.parse(data);
-            data = data.filter((e, i) => {
-            return unlinkFile( e.id != parseInt(req.params.id));
+        var dataToRead = JSON.parse(data);
+        var dataToRemove = dataToRead.filter((e, i) => {( e.id != parseInt(req.params.id))
+        return writeFile('students.json', JSON.stringify(dataToRemove))    
     });    
     })
     .then(() =>{
-        return res.status(204).send()
+        return res.status(204).send("deleted")
     })
     .catch((err) =>{
         return res.status(500).send(err)
@@ -96,25 +109,45 @@ const removeStudent = (req, res) => {
 };
 
 const updateStudent = (req, res) => {
-    students = students.map((s) => {
+    readFile('students.json')
+    .then((data) => {
+        var dataToRead = JSON.parse(data);
+        var updateData = dataToRead = dataToRead.map((s) => {
         if(s.id === parseInt(req.params.id)) {
             let d = {...req.body, id: parseInt(req.params.id)}
             return  d;
         }
         return s;
-    });
-    res.status(204).send();
+    })
+    return writeFile('student.json', JSON.stringify(updateData))
+    })
+    .then(() =>{
+        res.status(204).send('Updated');
+    })
+    .catch(() =>{
+        return res.status(500).send(err)
+    })
 };
 
 const patchStudent = (req, res) => {
-    students = students.map((s) => {
+    readFile('students.json')
+    .then((data) => {
+        var dataToRead = JSON.parse(data);
+        var patchData = dataToRead = dataToRead.map((s) => {
         if(s.id === parseInt(req.params.id)) {
             let d = {...s, ...req.body, id: parseInt(req.params.id)}
             return  d;
         }
         return s;
-    });
-    res.status(204).send();
+    })
+    return writeFile('student.json', JSON.stringify(patchData))
+    })
+    .then(() =>{
+        res.status(204).send('Patched');
+    })
+    .catch(() =>{
+        return res.status(500).send(err)
+    })
 };
 
 module.exports = {
