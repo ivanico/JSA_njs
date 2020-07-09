@@ -1,7 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const config = require('./pkg/config')
 const students = require('./handlers/students');
 const classes = require('./handlers/classes');
+const db = require('./pkg/db');
+const config = require('./pkg/config');
+
+db.init();
 
 const api = express();
 api.use(bodyParser.json());
@@ -28,5 +33,5 @@ api.listen(8090, err => {
     if(err) {
         console.error(err);
     }
-    console.log('Service started on port 8090');
+    console.log('Service started on port', config.get('serber').port);
 });
