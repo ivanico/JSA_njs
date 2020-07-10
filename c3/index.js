@@ -33,5 +33,5 @@ api.listen(8090, err => {
     if(err) {
         console.error(err);
     }
-    console.log('Service started on port', config.get('serber').port);
+    console.log('Service started on port', config.get('server').port);
 });
