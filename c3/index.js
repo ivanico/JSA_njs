@@ -1,10 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const config = require('./pkg/config')
-const students = require('./handlers/students');
-const classes = require('./handlers/classes');
-const db = require('./pkg/db');
 const config = require('./pkg/config');
+const students = require('./handler/students');
+const classes = require('./handler/classes');
+const db = require('./pkg/db');
+
 
 db.init();
 
@@ -21,7 +21,7 @@ api.patch('/students/:id', students.patch);
 
 
 api.get('/classes', classes.getAll);
-api.get('/classes/:id', classes.ghetSingle);
+api.get('/classes/:id', classes.getSingle);
 api.post('/classes', classes.create);
 api.delete('/classes/:id', classes.remove);
 api.put('/classes/:id', classes.update);

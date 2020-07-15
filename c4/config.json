@@ -1,0 +1,12 @@
+{
+    "db" : {
+        "host": "cluster0-j520k.mongodb.net",
+        "port": 27017,
+        "dbname": "test",
+        "username": "",
+        "password": ""
+    },
+    "server":{
+        "port": 8090
+    }
+}
